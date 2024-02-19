@@ -10,7 +10,6 @@
 # Only modify the code between the "LADIES AND GENTLEMEN, START YOUR ENGINES" and the
 # "FINISH" lines.
 
-import data_log_plotter
 import math
 import solver
 
@@ -97,10 +96,14 @@ def main():
     else:
         print(f"DNF")
 
-    graphs_filename = "race_01.png"
     if len(data_log[0][0]):
-        data_log_plotter.plot_graphs(data_log, graphs_filename)
-        print(f"Graphs for the data log were rendered to '{graphs_filename}'.")
+        try:
+            import data_log_plotter
+            graphs_filename = "race_01.png"
+            data_log_plotter.plot_graphs(data_log, graphs_filename)
+            print(f"Graphs for the data log were rendered to '{graphs_filename}'.")
+        except ModuleNotFoundError:
+            print("Unable to plot the graphs, please install Pillow. See README for tips.")
     else:
         print("Warning: no data log collected, not plotting the graphs.")
 

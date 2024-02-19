@@ -22,6 +22,10 @@ and
 is required
 to get the source code and keep it up to date.
 
+It's recommended to
+[install the Pillow library](https://pillow.readthedocs.io/en/stable/installation.html)
+so that you can get nice graphs to simplify debugging your racers.
+
 ## Race 1
 
 Please make sure you have the latest version of this repository.
