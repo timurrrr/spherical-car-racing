@@ -13,7 +13,7 @@
 import math
 import solver
 
-LENGTH = 1609 # meters. We're using the SI system here.
+RACE_DISTANCE = 1609 # meters. We're using the SI system here.
 TIME_LIMIT = 50 # seconds.
 
 # For simplicity, the car is AWD with CVT.
@@ -39,7 +39,7 @@ INITIAL_VELOCITY = [0]
 def my_driver_algorithm(x, v, t):
     # Here's a very naive (and not the fastest!) solution.
     # Edit it to your liking and see how much faster you can make the driver.
-    if x < LENGTH:
+    if x < RACE_DISTANCE:
         return 1
     else:
         return -1
@@ -76,14 +76,14 @@ data_log = [
 ]
 
 def progress_listener_callback_p_v_t(positions, velocities, t):
-    if velocities[0] < 0 and positions[0] < LENGTH:
+    if velocities[0] < 0 and positions[0] < RACE_DISTANCE:
         raise Exception(f"The car went backwards! Position = {positions[0]}, velocity = {velocities[0]}")
 
     data_log[0][0].append((positions[0], t))
     data_log[1][0].append((velocities[0], t))
     data_log[2][0].append((velocities[0], positions[0]))
 
-    if positions[0] >= LENGTH and velocities[0] <= 0:
+    if positions[0] >= RACE_DISTANCE and velocities[0] <= 0:
         return True  # Finished!
     return False
 
