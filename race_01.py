@@ -33,12 +33,13 @@ INITIAL_VELOCITY = [0]
 #   v: speed
 #   t: time since the start of the race
 #
-# Returns:
-#   1 for maximum acceleration, -1 for maximum braking, anything in between for
-#   partial acceleration/braking.
-def my_racer_algorithm(x, v, t):
+# Returns driver input (to the car), encoded as:
+#   1 for maximum acceleration,
+#   -1 for maximum braking,
+#   anything in between for partial acceleration/braking.
+def my_driver_algorithm(x, v, t):
     # Here's a very naive (and not the fastest!) solution.
-    # Edit it to your liking and see how
+    # Edit it to your liking and see how much faster you can make the driver.
     if x < LENGTH:
         return 1
     else:
@@ -48,26 +49,26 @@ def my_racer_algorithm(x, v, t):
  # # # # # # # # FINISH! # # # # # # # # #
 # # # # # # # # # # # # # # # # # # # # #
 
-def convert_racer_algorithm_to_acceleration(racer_output, v):
-    if racer_output > 1:
-        raise Exception(f"Too much throttle requested: {racer_output}")
-    if racer_output < -1:
-        raise Exception(f"Too much braking requested: {racer_output}")
+def convert_racer_algorithm_to_acceleration(driver_input, v):
+    if driver_input > 1:
+        raise Exception(f"Too much throttle requested: {driver_input}")
+    if driver_input < -1:
+        raise Exception(f"Too much braking requested: {driver_input}")
 
-    if racer_output > 0:
+    if driver_input > 0:
         # Power = Force * Velocity.
         # At low speeds, the car is traction limited:
-        if racer_output * POWER >= TRACTION * MASS * v:
+        if driver_input * POWER >= TRACTION * MASS * v:
             return TRACTION
         # Beyond that, it's power-limited:
-        return racer_output * POWER / (v * MASS)
+        return driver_input * POWER / (v * MASS)
     else:
-        return racer_output * TRACTION
+        return driver_input * TRACTION
 
 def calculate_forces_p_v_t(positions, velocities, t):
     x = positions[0]
     v = velocities[0]
-    return [convert_racer_algorithm_to_acceleration(my_racer_algorithm(x, v, t), v)]
+    return [convert_racer_algorithm_to_acceleration(my_driver_algorithm(x, v, t), v)]
 
 data_log = [
    ([], "distance, m", "time, sec"),
