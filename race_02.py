@@ -2,8 +2,8 @@
 #
 # Today, we're going to have a slightly more complicated race:
 # You need to drive a 100-meter section of a straight road as quickly as possible.
-# You can enter the section at any speed, but you have to slow down to 30 m/s
-# (or slower) before the end of the section.
+# You can enter the section at any speed, but your speed at the end of the
+# section should be 30 m/s or lower.
 #
 # The current record is 2.386 seconds. Can you match or even beat it?
 #
