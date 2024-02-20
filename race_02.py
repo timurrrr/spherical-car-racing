@@ -1,7 +1,7 @@
 # Welcome to the Race 2 of the Spherical Car Racing tournament!
 #
 # Today, we're going to have a slightly more complicated race:
-# You need to drive a 100-meter section of a straight road as fast as possible.
+# You need to drive a 100-meter section of a straight road as quickly as possible.
 # You can enter the section at any speed, but you have to slow down to 30 m/s
 # (or slower) before the end of the section.
 #
