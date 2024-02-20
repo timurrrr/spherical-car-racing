@@ -30,17 +30,18 @@ It's recommended to
 [install the Pillow library](https://pillow.readthedocs.io/en/stable/installation.html)
 so that you can get nice graphs to simplify debugging your racers.
 
-## Race 01
+Before participating in any race, please make sure you have the latest version
+of this repository by running `git pull`. The race setups and descriptions might
+get improved/clarified over time, as well as updated in case new records are set.
+Some races may also be removed in case they are proved to be incorrect / too ambiguous.
 
-Please make sure you have the latest version of this repository.
+## Race 01
 
 Open [`race_01.py`](race_01.py) and read the comment at the start of the file
 for rules and tips on how to proceed.
 
 This is a very simple race, the main purpose here is to let people learn how to
 race a spherical car in Python :)
-
-Have fun!
 
 ## Race 02
 
@@ -49,3 +50,6 @@ for rules and tips on how to proceed.
 
 In this race you might learn something interesting and counter-intuitive.
 
+---
+
+Have fun!
