@@ -1,11 +1,14 @@
-# Welcome to the Race 1 of the Spherical Car Racing tournament!
+# Welcome to the Race 2 of the Spherical Car Racing tournament!
 #
-# Today, we're going to have a simple race:
-# You start from a standstill, and your task is to:
-# 1) travel at least 1 mile (1609 meters) in total, and
-# 2) come to a stop.
+# Today, we're going to have a slightly more complicated race:
+# You need to drive a 100-meter section of a straight road as fast as possible.
+# You can enter the section at any speed, but you have to slow down to 30 m/s
+# (or slower) before the end of the section.
 #
-# The current record is 31.896 seconds. Can you match or even beat it?
+# The current record is 2.386 seconds. Can you match or even beat it?
+#
+# Note that due to rounding errors you might not be able to have the exit speed
+# precisely match 30 m/s.
 #
 # Only modify the code between the "LADIES AND GENTLEMEN, START YOUR ENGINES" and the
 # "FINISH" lines.
@@ -13,7 +16,8 @@
 import math
 import solver
 
-RACE_DISTANCE = 1609 # meters. We're using the SI system here.
+RACE_DISTANCE = 100 # meters. We're using the SI system here.
+MAX_SPEED_AT_FINISH = 30 # m/s.
 TIME_LIMIT = 50 # seconds.
 
 # For simplicity, the car is AWD with CVT.
@@ -23,7 +27,6 @@ POWER = 150000 # Watts. This is ~200 whp.
 TRACTION = 10 # m/s^2.
 
 INITIAL_POSITION = 0
-INITIAL_VELOCITY = 0
 
 # LADIES AND GENTLEMEN, START YOUR ENGINES
 #
@@ -32,6 +35,9 @@ INITIAL_VELOCITY = 0
 #
 # Tip: try to solve this using your physics knowledge.
 # Bonus points if your solution provides the fastest result for any RACE_DISTANCE.
+
+# This time, you can control the initial speed.
+INITIAL_VELOCITY = 30 # m/s.
 
 # my_driver_algorithm(x, v, t) defines how your driver will drive.
 #
@@ -45,7 +51,7 @@ INITIAL_VELOCITY = 0
 #   -1 for maximum braking,
 #   anything in between -1 and 1 for partial acceleration/braking.
 def my_driver_algorithm(x, v, t):
-    if x < RACE_DISTANCE:
+    if x < 69:
         return 1
     else:
         return -1
@@ -89,7 +95,7 @@ def progress_listener_callback_p_v_t(positions, velocities, t):
     data_log[1][0].append((velocities[0], t))
     data_log[2][0].append((velocities[0], positions[0]))
 
-    if positions[0] >= RACE_DISTANCE and velocities[0] <= 0:
+    if positions[0] >= RACE_DISTANCE:
         return True  # Finished!
     return False
 
@@ -101,23 +107,29 @@ def main():
         progress_listener_callback_p_v_t)
 
     if time < TIME_LIMIT:
-        # Need to do two <= comparisons here as the underlying number has more
-        # .3 precision. It can be tricky to deal with rounding!
-        if time <= 31.8955:
-            print("NEW RECORD! Please reach out to timurrrr@ to certify.")
-        elif time <= 31.8961:
-            print("YOU WON! Congrats.")
+        if velocities[0] <= MAX_SPEED_AT_FINISH:
+            # Need to do <= comparisons here as the underlying number has more than
+            # .3 precision. It can be tricky to deal with rounding!
+            if time <= 2.3855:
+                print("NEW RECORD! Please reach out to timurrrr@ to certify.")
+            elif time <= 2.386:
+                print("YOU WON! Congrats.")
+            else:
+                print("Good effort, but can you go quicker?")
+            print(f"Finished in {time:.3f} seconds.")
+            print(f"Distance traveled: {positions[0]:.1f} meters.")
+            print(f"Speed at the finish: {velocities[0]:.2f} m/s.")
         else:
-            print("Good effort, but can you go quicker?")
-        print(f"Finished in {time:.3f} seconds.")
-        print(f"Distance traveled: {positions[0]:.1f} meters.")
+            print("DISQUALIFIED!")
+            print(f"Finished the race in {time:.3f} seconds,")
+            print(f"but the speed at the finish was too high ({velocities[0]:.2f} m/s.)")
     else:
         print(f"DNF")
 
     if len(data_log[0][0]):
         try:
             import data_log_plotter
-            graphs_filename = "race_01.png"
+            graphs_filename = "race_02.png"
             data_log_plotter.plot_graphs(data_log, graphs_filename)
             print(f"Graphs for the data log were rendered to '{graphs_filename}'.")
         except ModuleNotFoundError:
