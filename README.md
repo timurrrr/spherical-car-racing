@@ -12,8 +12,11 @@ cars, and learn something along the way?
 
 ## Prerequisites
 
-You should have solid beginner understanding of Python to be able to program
-your "driver".
+You should have solid beginner-level understanding of Python to be able to program
+your "driver". You can try one of the free Python courses, such as
+[one](https://www.mathplanet.com/education/programming)
+[of](https://www.coursera.org/professional-certificates/google-it-automation)
+[these](https://www.udemy.com/course/math-with-python/).
 
 Basic understanding of school level physics is recommended.
 
@@ -21,8 +24,7 @@ Very basic understanding of Git commands such as
 [`git clone`](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
 and
 [`git pull`](https://docs.github.com/en/get-started/using-git/getting-changes-from-a-remote-repository)
-is required
-to get the source code and keep it up to date.
+is required to get the source code and keep it up to date.
 
 It's recommended to
 [install the Pillow library](https://pillow.readthedocs.io/en/stable/installation.html)
