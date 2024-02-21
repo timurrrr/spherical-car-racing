@@ -41,9 +41,13 @@ INITIAL_VELOCITY = 0
 #   t: time since the start of the race
 #
 # Returns driver input (to the car), encoded as:
-#   1 for maximum acceleration,
-#   -1 for maximum braking,
+#   1 for maximum acceleration (think of it as an accelerator pedal),
+#   -1 for maximum braking (think of it as a brake pedal),
 #   anything in between -1 and 1 for partial acceleration/braking.
+#
+# This spherical car has traction control, meaning if the driver requests more
+# power than the tires can handle, the car will only use the amount of power the
+# tires can handle.
 def my_driver_algorithm(x, v, t):
     if x < RACE_DISTANCE:
         return 1
@@ -62,12 +66,13 @@ def convert_racer_algorithm_to_acceleration(driver_input, v):
 
     if driver_input > 0:
         # Power = Force * Velocity.
-        # At low speeds, the car is traction limited:
+        # At low speeds, the car is traction limited and the TC kicks in:
         if driver_input * POWER >= TRACTION * MASS * v:
             return TRACTION
         # Beyond that, it's power-limited:
         return driver_input * POWER / (v * MASS)
     else:
+        # Braking.
         return driver_input * TRACTION
 
 def calculate_forces_p_v_t(positions, velocities, t):
