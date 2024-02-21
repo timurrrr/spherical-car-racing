@@ -34,7 +34,7 @@ INITIAL_POSITION = 0
 # Edit it to your liking and see how much faster you can make the driver.
 #
 # Tip: try to solve this using your physics knowledge.
-# Bonus points if your solution provides the fastest result for any RACE_DISTANCE.
+# Brownie points if your solution provides the fastest result for any RACE_DISTANCE.
 
 # This time, you can control the initial speed.
 INITIAL_SPEED = 30 # m/s.
@@ -81,7 +81,7 @@ def convert_racer_algorithm_to_acceleration(driver_input, v):
         # Braking.
         return driver_input * TRACTION
 
-def calculate_forces_p_v_t(positions, velocities, t):
+def calculate_accelerations_p_v_t(positions, velocities, t):
     x = positions[0]
     v = velocities[0]
     return [convert_racer_algorithm_to_acceleration(my_driver_algorithm(x, v, t), v)]
@@ -107,7 +107,7 @@ def progress_listener_callback_p_v_t(positions, velocities, t):
 def main():
     positions, velocities, time = solver.solveRK4(
         [INITIAL_POSITION], [INITIAL_SPEED],
-        calculate_forces_p_v_t,
+        calculate_accelerations_p_v_t,
         TIME_LIMIT, 0.001,
         progress_listener_callback_p_v_t)
 
