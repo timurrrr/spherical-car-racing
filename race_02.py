@@ -37,7 +37,7 @@ INITIAL_POSITION = 0
 # Bonus points if your solution provides the fastest result for any RACE_DISTANCE.
 
 # This time, you can control the initial speed.
-INITIAL_VELOCITY = 30 # m/s.
+INITIAL_SPEED = 30 # m/s.
 
 # my_driver_algorithm(x, v, t) defines how your driver will drive.
 #
@@ -106,7 +106,7 @@ def progress_listener_callback_p_v_t(positions, velocities, t):
 
 def main():
     positions, velocities, time = solver.solveRK4(
-        [INITIAL_POSITION], [INITIAL_VELOCITY],
+        [INITIAL_POSITION], [INITIAL_SPEED],
         calculate_forces_p_v_t,
         TIME_LIMIT, 0.001,
         progress_listener_callback_p_v_t)

@@ -23,7 +23,7 @@ POWER = 150000 # Watts. This is ~200 whp.
 TRACTION = 10 # m/s^2.
 
 INITIAL_POSITION = 0
-INITIAL_VELOCITY = 0
+INITIAL_SPEED = 0
 
 # LADIES AND GENTLEMEN, START YOUR ENGINES
 #
@@ -100,7 +100,7 @@ def progress_listener_callback_p_v_t(positions, velocities, t):
 
 def main():
     positions, velocities, time = solver.solveRK4(
-        [INITIAL_POSITION], [INITIAL_VELOCITY],
+        [INITIAL_POSITION], [INITIAL_SPEED],
         calculate_forces_p_v_t,
         TIME_LIMIT, 0.001,
         progress_listener_callback_p_v_t)
