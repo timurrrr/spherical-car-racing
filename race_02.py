@@ -105,42 +105,44 @@ def progress_listener_callback_p_v_t(positions, velocities, t):
     return False
 
 def main():
-    positions, velocities, time = solver.solveRK4(
-        [INITIAL_POSITION], [INITIAL_SPEED],
-        calculate_accelerations_p_v_t,
-        TIME_LIMIT, 0.001,
-        progress_listener_callback_p_v_t)
+    try:
+        positions, velocities, time = solver.solveRK4(
+            [INITIAL_POSITION], [INITIAL_SPEED],
+            calculate_accelerations_p_v_t,
+            TIME_LIMIT, 0.001,
+            progress_listener_callback_p_v_t)
 
-    if time < TIME_LIMIT:
-        if velocities[0] <= MAX_SPEED_AT_FINISH:
-            # Need to do <= comparisons here as the underlying number has more than
-            # .3 precision. It can be tricky to deal with rounding!
-            if time <= 2.3855:
-                print("NEW RECORD! Please reach out to timurrrr@ to certify.")
-            elif time <= 2.386:
-                print("YOU WON! Congrats.")
+        if time < TIME_LIMIT:
+            if velocities[0] <= MAX_SPEED_AT_FINISH:
+                # Need to do <= comparisons here as the underlying number has more than
+                # .3 precision. It can be tricky to deal with rounding!
+                if time <= 2.3855:
+                    print("NEW RECORD! Please reach out to timurrrr@ to certify.")
+                elif time <= 2.386:
+                    print("YOU WON! Congrats.")
+                else:
+                    print("Good effort, but can you go quicker?")
+                print(f"Finished in {time:.3f} seconds.")
+                print(f"Distance traveled: {positions[0]:.1f} meters.")
+                print(f"Speed at the finish: {velocities[0]:.2f} m/s.")
             else:
-                print("Good effort, but can you go quicker?")
-            print(f"Finished in {time:.3f} seconds.")
-            print(f"Distance traveled: {positions[0]:.1f} meters.")
-            print(f"Speed at the finish: {velocities[0]:.2f} m/s.")
+                print("DISQUALIFIED!")
+                print(f"Finished the race in {time:.3f} seconds,")
+                print(f"but the speed at the finish was too high ({velocities[0]:.2f} m/s.)")
         else:
-            print("DISQUALIFIED!")
-            print(f"Finished the race in {time:.3f} seconds,")
-            print(f"but the speed at the finish was too high ({velocities[0]:.2f} m/s.)")
-    else:
-        print(f"DNF")
+            print(f"DNF")
 
-    if len(data_log[0][0]):
-        try:
-            import data_log_plotter
-            graphs_filename = "race_02.png"
-            data_log_plotter.plot_graphs(data_log, graphs_filename)
-            print(f"Graphs for the data log were rendered to '{graphs_filename}'.")
-        except ModuleNotFoundError:
-            print("Unable to plot the graphs, please install Pillow. See README for tips.")
-    else:
-        print("Warning: no data log collected, not plotting the graphs.")
+    finally:
+        if len(data_log[0][0]):
+            try:
+                import data_log_plotter
+                graphs_filename = "race_02.png"
+                data_log_plotter.plot_graphs(data_log, graphs_filename)
+                print(f"Graphs for the data log were rendered to '{graphs_filename}'.")
+            except ModuleNotFoundError:
+                print("Unable to plot the graphs, please install Pillow. See README for tips.")
+        else:
+            print("Warning: no data log collected, not plotting the graphs.")
 
 if __name__ == '__main__':
     main()
