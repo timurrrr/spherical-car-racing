@@ -50,6 +50,20 @@ for rules and tips on how to proceed.
 
 In this race you might learn something interesting and counter-intuitive.
 
+## Race 03
+
+This is the first 2D race, and it looks like a small autox course.
+
+Open [`race_03.py`](race_03.py) and read the comment at the start of the file
+for rules and tips on how to proceed.
+
+The naive solution uses a "karting" line, but the fastest line will be much
+more interesting. Once you find the optimal solution, compare the
+speed-vs-distance graph of the naive solution with the same graph for the
+optimal solution. You will notice that even such a simple 2D spherical car model
+requires some "driving techniques" that are typically believed to be needed only
+for much more complex 3D effects...
+
 ---
 
 Have fun!
