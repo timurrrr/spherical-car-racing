@@ -109,8 +109,11 @@ def calculate_accelerations_p_v_t(positions, velocities, t):
 
 data_log = [
    ([], "y, m", "x, m"),
-   ([], "x, m", "time, sec"),
-   ([], "y, m", "time, sec"),
+   ([], "long G, m/s^2", "time, sec"),
+   ([], "lat G, m/s^2", "time, sec"),
+   ([], "line curvature radius, m", "time, sec"),
+   ([], "long G, m/s^2", "distance, m"),
+   ([], "lat G, m/s^2", "distance, m"),
    ([], "speed, m/s", "distance, m")
 ]
 prev_position = [0, 0]
@@ -138,11 +141,34 @@ def progress_listener_callback_p_v_t(positions, velocities, t):
     distance += math.sqrt(math.pow(positions[0] - prev_position[0], 2) + math.pow(positions[1] - prev_position[1], 2))
     prev_position = positions[:]
 
+    vx, vy = velocities[0], velocities[1]
+    ax, ay = my_driver_algorithm(x, y, vx, vy, t)
+
+    v_total = math.sqrt(math.pow(vx, 2) + math.pow(vy, 2))
+    if v_total > 0:
+        long_g = (ax * vx + ay * vy) / v_total
+        lat_g = (ax * vy - ay * vx) / v_total
+    else:
+        long_g = None
+        lat_g = None
+
+    if lat_g:
+        line_curvature = math.pow(v_total, 2) / lat_g
+        if abs(line_curvature) > 50:
+            line_curvature = None
+    else:
+        line_curvature = None
+
+
     speed = math.sqrt(math.pow(velocities[0], 2) + math.pow(velocities[1], 2))
+
     data_log[0][0].append((positions[1], positions[0]))
-    data_log[1][0].append((positions[0], t))
-    data_log[2][0].append((positions[1], t))
-    data_log[3][0].append((speed, distance))
+    data_log[1][0].append((long_g, t))
+    data_log[2][0].append((lat_g, t))
+    data_log[3][0].append((line_curvature, t))
+    data_log[4][0].append((long_g, distance))
+    data_log[5][0].append((lat_g, distance))
+    data_log[6][0].append((speed, distance))
 
     if x >= 50 and x <= 70 and y < 0:
         return True  # Finished!
