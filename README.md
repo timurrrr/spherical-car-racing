@@ -64,6 +64,13 @@ optimal solution. You will notice that even such a simple 2D spherical car model
 requires some "driving techniques" that are typically believed to be needed only
 for much more complex 3D effects...
 
+## Race 04
+
+This takes the idea of Race 03 and takes a few more steps in the direction of
+real autox courses.
+
+Open [`race_04.py`](race_04.py) and read the comment at the start of the file
+for rules and tips on how to proceed.
 ---
 
 Have fun!
