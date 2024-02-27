@@ -108,13 +108,13 @@ def calculate_accelerations_p_v_t(positions, velocities, t):
     return [ax, ay]
 
 data_log = [
-   ([], "y, m", "x, m"),
+   ([], "y, m", "x, m"),  # TODO force same scale x vs y.
    ([], "long G, m/s^2", "time, sec"),
    ([], "lat G, m/s^2", "time, sec"),
-   ([], "line curvature radius, m", "time, sec"),
+   ([], "speed, m/s", "distance, m"),
    ([], "long G, m/s^2", "distance, m"),
    ([], "lat G, m/s^2", "distance, m"),
-   ([], "speed, m/s", "distance, m")
+   ([], "line curvature radius, m", "distance, m"),
 ]
 prev_position = [0, 0]
 distance = 0
@@ -165,10 +165,10 @@ def progress_listener_callback_p_v_t(positions, velocities, t):
     data_log[0][0].append((positions[1], positions[0]))
     data_log[1][0].append((long_g, t))
     data_log[2][0].append((lat_g, t))
-    data_log[3][0].append((line_curvature, t))
+    data_log[3][0].append((speed, distance))
     data_log[4][0].append((long_g, distance))
     data_log[5][0].append((lat_g, distance))
-    data_log[6][0].append((speed, distance))
+    data_log[6][0].append((line_curvature, distance))
 
     if x >= 50 and x <= 70 and y < 0:
         return True  # Finished!
