@@ -150,7 +150,7 @@ def progress_listener_callback_p_v_t(positions, velocities, t):
             if y > 0:
                 raise Exception(f"Cut the course at (x={x:.3f}, y={y:.3f}), t={t:.3f}")
         num_cones_passed = num_cones_passed + 1
-        print(f"Crossed cone {num_cones_passed} at (x={x:.3f}, y={y:.3f}), t={t:.3f}")
+        print(f"Passed the cone #{num_cones_passed} at (x={x:.3f}, y={y:.3f}), t={t:.3f}")
 
     global distance
     global prev_position

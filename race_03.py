@@ -66,16 +66,16 @@ INITIAL_SPEED = math.sqrt(20 * 10)
 #   any combination of inputs.
 def my_driver_algorithm(x, y, vx, vy, t):
     # First, do a 90º arc with a 20 meter radius with the center at (0, 20).
-    # The 0.01 is added to correct for rounding/integration errors (duh...).
-    # This shouldn't affect the total time much, and is not needed for the
-    # optimal solution.
+    # The small offsets are added to correct for rounding/integration errors
+    # (duh...). This shouldn't affect the total time much, and is not needed
+    # for the optimal solution.
     if t < 0.5 * math.pi * 20 / INITIAL_SPEED:
-        return (0.5 * (0 - x) + 0.01, 0.5 * (20 - y))
+        return (0.5 * (0 - x) + 0.0001, 0.5 * (20 - y))
 
     # Then, do an 180º arc with a 20 meter radius with the center at (40, 20).
     # 0.01 is added here to correct for rounding/integration errors as well.
     if t < 1.5 * math.pi * 20 / INITIAL_SPEED:
-        return (0.5 * (40 - x), 0.5 * (20 - y) + 0.01)
+        return (0.5 * (40 - x) - 0.003, 0.5 * (20 - y) + 0.0001)
 
     # Straight line acceleration to the finish.
     return 0, -10
@@ -123,18 +123,18 @@ passed_apex = False
 def progress_listener_callback_p_v_t(positions, velocities, t):
     x, y = positions[0], positions[1]
     if y > 20 and x < 20:
-        raise Exception(f"Cut the course at ({x}, {y})")
+        raise Exception(f"Cut the course at (x={x:.3f}, y={y:.3f}), t={t:.3f}")
     if y > 20 and x > 60:
-        raise Exception(f"Cut the course at ({x}, {y})")
+        raise Exception(f"Cut the course at (x={x:.3f}, y={y:.3f}), t={t:.3f}")
     if y > 60:
-        raise Exception(f"Hit the wall at ({x}, {y})")
+        raise Exception(f"Hit the wall at (x={x:.3f}, y={y:.3f}), t={t:.3f}")
 
     global passed_apex
     if x >= 40 and not passed_apex:
-        if y >= 40:
-            passed_apex = True
-        else:
-            raise Exception(f"Cut the course at ({x}, {y})")
+        if y < 40:
+            raise Exception(f"Cut the course at (x={x:.3f}, y={y:.3f}), t={t:.3f}")
+        passed_apex = True
+        print(f"Passed the cone at (x={x:.3f}, y={y:.3f}), t={t:.3f}")
 
     global distance
     global prev_position
