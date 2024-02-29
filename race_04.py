@@ -10,7 +10,7 @@
 #     (40, 40), (80, 0), (120, 40), (160, 0), (200, 40)
 #   and finish by going through the gate between (210, 0) and (230, 0).
 #
-# The current record is 22.869 seconds. Can you match or even beat it?
+# The current record is 22.832 seconds. Can you match or even beat it?
 #
 # Only modify the code between the "LADIES AND GENTLEMEN, START YOUR ENGINES" and the
 # "FINISH" lines.
@@ -62,33 +62,33 @@ INITIAL_SPEED = math.sqrt(20 * 10)
 #   any combination of inputs.
 def my_driver_algorithm(x, y, vx, vy, t):
     # First, do a 90º arc with a 20 meter radius with the center at (0, 20).
-    # The 0.01 is added to correct for rounding/integration errors (duh...).
-    # This shouldn't affect the total time much, and is not needed for the
-    # optimal solution.
+    # The small offsets are added to correct for rounding/integration errors
+    # (duh...). This shouldn't affect the total time much, but admittedly is
+    # unpleasant. The future races should be less sensitive to issues like that.
     if t < 0.5 * math.pi * 20 / INITIAL_SPEED:
-        return (0.5 * (0 - x) + 0.01, 0.5 * (20 - y))
+        return (0.5 * (0 - x) + 0.0001, 0.5 * (20 - y))
 
     # Then, do an 180º arc with a 20 meter radius with the center at (40, 20).
     # 0.01 is added here to correct for rounding/integration errors as well.
     if t < 1.5 * math.pi * 20 / INITIAL_SPEED:
-        return (0.5 * (40 - x), 0.5 * (20 - y) + 0.01)
+        return (0.5 * (40 - x), 0.5 * (20 - y) + 0.0001)
 
     # Then, do an 180º arc with a 20 meter radius with the center at (80, 20).
     if t < 2.5 * math.pi * 20 / INITIAL_SPEED:
-        return (0.5 * (80 - x) + 0.01, 0.5 * (20 - y) - 0.01)
+        return (0.5 * (80 - x) + 0.006, 0.5 * (20 - y) - 0.0051)
 
     # Then, do an 180º arc with a 20 meter radius with the center at (120, 20).
     if t < 3.5 * math.pi * 20 / INITIAL_SPEED:
-        return (0.5 * (120 - x), 0.5 * (20 - y) + 0.02)
+        return (0.5 * (120 - x), 0.5 * (20 - y) + 0.012)
 
     # Then, do an 180º arc with a 20 meter radius with the center at (160, 20).
     # The rounding/integration errors start to get out of hand...
     if t < 4.5 * math.pi * 20 / INITIAL_SPEED:
-        return (0.495 * (160 - x), 0.495 * (20 - y))
+        return (0.5 * (160 - x), 0.5 * (20 - y) - 0.016)
 
     # Then, do an 180º arc with a 20 meter radius with the center at (200, 20).
     if t < 5.5 * math.pi * 20 / INITIAL_SPEED:
-        return (0.49 * (200 - x), 0.49 * (20 - y))
+        return (0.5 * (200 - x), 0.5 * (20 - y) + 0.033)
 
     # Straight line acceleration to the finish.
     return 0, -10
@@ -203,9 +203,9 @@ def main():
             # .3 precision. It can be tricky to deal with rounding!
             # TODO: well actually the theoretical fastest time is a bit faster,
             #   but I was unable to achieve it yet due to rounding errors.
-            if time <= 22.8685:
+            if time <= 22.8315:
                 print("NEW RECORD! Please reach out to timurrrr@ to certify.")
-            elif time <= 22.8695:
+            elif time <= 22.8325:
                 print("YOU WON! Congrats.")
             else:
                 print("Good effort, but can you go quicker?")
