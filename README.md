@@ -72,6 +72,14 @@ real autox courses.
 Open [`race_04.py`](race_04.py) and read the comment at the start of the file
 for rules and tips on how to proceed.
 
+## Race 05
+
+We're getting back to the basics, and racing a simple "straight, 90º corner,
+straight" course. Sounds simple, but the optimal solution will likely be more
+complicated!
+
+Open [`race_05.py`](race_05.py) and read the comment at the start of the file
+for rules and tips on how to proceed.
 ---
 
 Have fun!
