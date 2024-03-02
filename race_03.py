@@ -102,9 +102,10 @@ def normalize_accelerations(ax, ay):
 
 def calculate_accelerations_p_v_t(positions, velocities, t):
     ax, ay = my_driver_algorithm(positions[0], positions[1], velocities[0], velocities[1], t)
+    total = math.sqrt(math.pow(ax, 2) + math.pow(ay, 2))
     ax, ay = normalize_accelerations(ax, ay)
     if ax**2 + ay**2 > MAX_TRACTION**2:
-        raise Exception(f"Too much traction demanded: ({ax}, {ay})")
+        raise Exception(f"Too much traction demanded: (ax={ax}, ay={ay}, total before normalization={total}")
     return [ax, ay]
 
 data_log = [
