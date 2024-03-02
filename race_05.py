@@ -191,9 +191,9 @@ def main():
         if time < TIME_LIMIT:
             # Need to do <= comparisons here as the underlying number has more than
             # .3 precision. It can be tricky to deal with rounding!
-            if time <= 6.8365:
+            if time <= 6.8135:
                 print("NEW RECORD! Please reach out to timurrrr@ to certify.")
-            elif time <= 6.8375:
+            elif time <= 6.8145:
                 print("YOU WON! Congrats.")
             else:
                 print("Good effort, but can you go quicker?")
