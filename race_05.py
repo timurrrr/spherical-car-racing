@@ -11,13 +11,14 @@
 #   Before the cone, you need to be between 0 and 20 on the x axis; after the
 #   cone you need to be between 100 and 120 on the y axis.
 #
-# The current record is 6.837 seconds. Can you match or even beat it?
-#
 # Only modify the code between the "LADIES AND GENTLEMEN, START YOUR ENGINES" and the
 # "FINISH" lines.
 
 import math
 import solver
+
+# This is the current record. Can you match or even beat it?
+RECORD = 6.814
 
 TIME_LIMIT = 20 # seconds.
 
@@ -189,11 +190,10 @@ def main():
             progress_listener_callback_p_v_t)
 
         if time < TIME_LIMIT:
-            # Need to do <= comparisons here as the underlying number has more than
-            # .3 precision. It can be tricky to deal with rounding!
-            if time <= 6.8135:
+            time_round = round(time, 3)
+            if time_round < RECORD:
                 print("NEW RECORD! Please reach out to timurrrr@ to certify.")
-            elif time <= 6.8145:
+            elif time_round == RECORD:
                 print("YOU WON! Congrats.")
             else:
                 print("Good effort, but can you go quicker?")
