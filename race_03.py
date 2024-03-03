@@ -115,7 +115,7 @@ data_log = [
    ([], "speed, m/s", "distance, m"),
    ([], "long G, m/s^2", "distance, m"),
    ([], "lat G, m/s^2", "distance, m"),
-   ([], "line curvature radius, m", "distance, m"),
+   ([], "line curvature radius, 1000/m", "distance, m"),
 ]
 prev_position = [0, 0]
 distance = 0
@@ -154,11 +154,10 @@ def progress_listener_callback_p_v_t(positions, velocities, t):
         lat_g = None
 
     if lat_g:
-        line_curvature = math.pow(v_total, 2) / lat_g
-        if abs(line_curvature) > 50:
-            line_curvature = None
+        line_radius = math.pow(v_total, 2) / lat_g
+        line_curvature = 1000 / line_radius
     else:
-        line_curvature = None
+        line_curvature = 0
 
 
     speed = math.sqrt(math.pow(velocities[0], 2) + math.pow(velocities[1], 2))
