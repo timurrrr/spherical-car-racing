@@ -81,6 +81,15 @@ complicated!
 Open [`race_05.py`](race_05.py) and read the comment at the start of the file
 for rules and tips on how to proceed.
 
+## Race 06
+
+We take the course design from Race 05 and take it one step further, making the
+lengths of the straights before and after the corner different. Will it affect
+the optimal line through the corner?
+
+Open [`race_06.py`](race_06.py) and read the comment at the start of the file
+for rules and tips on how to proceed.
+
 ---
 
 Have fun!
