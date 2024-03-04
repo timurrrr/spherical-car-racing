@@ -54,6 +54,8 @@ In this race you might learn something interesting and counter-intuitive.
 
 This is the first 2D race, and it looks like a small autox course.
 
+![Race 03 course layout](images/race-03-course.jpg)
+
 Open [`race_03.py`](race_03.py) and read the comment at the start of the file
 for rules and tips on how to proceed.
 
@@ -75,17 +77,19 @@ for rules and tips on how to proceed.
 ## Race 05
 
 We're getting back to the basics, and racing a simple "straight, 90º corner,
-straight" course. Sounds simple, but the optimal solution will likely be more
-complicated!
+straight" course.
 
-Open [`race_05.py`](race_05.py) and read the comment at the start of the file
-for rules and tips on how to proceed.
+![Race 05 course layout](images/race-05-course.jpg)
+
+Sounds simple, but the optimal solution will likely be more
+complicated! Open [`race_05.py`](race_05.py) and read the comment at the
+start of the file for rules and tips on how to proceed.
 
 ## Race 06
 
-We take the course design from Race 05 and take it one step further, making the
-lengths of the straights before and after the corner different. Will it affect
-the optimal line through the corner?
+We take the course design from Race 05 and take it one step further, adding
+300 meters to the straight after the corner. Will it affect the optimal line
+through the corner?
 
 Open [`race_06.py`](race_06.py) and read the comment at the start of the file
 for rules and tips on how to proceed.
