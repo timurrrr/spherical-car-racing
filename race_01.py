@@ -5,8 +5,8 @@
 # 1) travel at least 1 mile (1609 meters) in total, and
 # 2) come to a stop.
 #
-# Only modify the code between the "LADIES AND GENTLEMEN, START YOUR ENGINES" and the
-# "FINISH" lines.
+# Only modify the code between the "LADIES AND GENTLEMEN, START YOUR ENGINES"
+# and the "FINISH" lines.
 
 # This is the current record. Can you match or even beat it?
 RECORD = 31.896

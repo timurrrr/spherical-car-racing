@@ -1,4 +1,4 @@
-# Welcome to the Race 2 of the Spherical Car Racing tournament!
+# Welcome to the Race 4 of the Spherical Car Racing tournament!
 #
 # Today we're going to do our second 2D race, and it will look even more like an
 # autox course.
@@ -10,12 +10,12 @@
 #     (40, 40), (80, 0), (120, 40), (160, 0), (200, 40)
 #   and finish by going through the gate between (210, 0) and (230, 0).
 #
-# Only modify the code between the "LADIES AND GENTLEMEN, START YOUR ENGINES" and the
-# "FINISH" lines.
+# Only modify the code between the "LADIES AND GENTLEMEN, START YOUR ENGINES"
+# and the "FINISH" lines.
 
 # This is the current record. Can you match or even beat it?
-# TODO: the theoretical fastest time is a bit faster, but I was unable to achieve it yet due to
-#       rounding errors.
+# TODO: the theoretical fastest time is a bit faster, but I was unable to
+#       achieve it yet due to rounding errors.
 RECORD = 22.832
 
 from common import *

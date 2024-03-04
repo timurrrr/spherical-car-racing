@@ -1,4 +1,4 @@
-# Welcome to the Race 2 of the Spherical Car Racing tournament!
+# Welcome to the Race 5 of the Spherical Car Racing tournament!
 #
 # Today we're going to go back to the basics, and study a single 90º corner.
 # How hard can that be?
@@ -11,8 +11,8 @@
 #   Before the cone, you need to be between 0 and 20 on the x axis; after the
 #   cone you need to be between 100 and 120 on the y axis.
 #
-# Only modify the code between the "LADIES AND GENTLEMEN, START YOUR ENGINES" and the
-# "FINISH" lines.
+# Only modify the code between the "LADIES AND GENTLEMEN, START YOUR ENGINES"
+# and the "FINISH" lines.
 
 # This is the current record. Can you match or even beat it?
 RECORD = 6.814

@@ -8,8 +8,8 @@
 # Note that due to rounding errors you might not be able to have the exit speed
 # precisely match 30 m/s.
 #
-# Only modify the code between the "LADIES AND GENTLEMEN, START YOUR ENGINES" and the
-# "FINISH" lines.
+# Only modify the code between the "LADIES AND GENTLEMEN, START YOUR ENGINES"
+# and the "FINISH" lines.
 
 # This is the current record. Can you match or even beat it?
 RECORD = 2.386

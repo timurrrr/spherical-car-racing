@@ -1,24 +1,21 @@
-# Welcome to the Race 3 of the Spherical Car Racing tournament!
+# Welcome to the Race 6 of the Spherical Car Racing tournament!
 #
-# Today we're going to do our first 2D race, and it will start to resemble an
-# autox course.
+# This is a variation of the same idea as Race 05, but this time the straight
+# after the corner is longer than the one that leads to the corner.
 #
 # TODO: draw the map as a PNG. For now, here's the text description:
-#   You start at (0,0) and drive at INITIAL_SPEED in the direction of the
-#   x axis (i.e. right on the map).
-#   You turn left to go around a straight wall that starts at (20, 20) and goes
-#   along the y axis (i.e. up on the map) to (20, 60)
-#   You then need to turn right around the apex at (40, 40).
-#   There's another straight wall from (20, 60) to (60, 60).
-#   At the track out, you need to avoid the end of the third straight wall that
-#   goes from (60, 60) to (60, 20).
-#   The finish line is then ahead of you, going from (50, 0) to (70, 0).
+#   You start anywhere between (0,0) and (20,0) drive at INITIAL_SPEED in the
+#   direction of the y axis (i.e. up on the map).
+#   You need to go around the cone at (20, 100), and finish between (420, 100)
+#   and (420, 120).
+#   Before the cone, you need to be between 0 and 20 on the x axis; after the
+#   cone you need to be between 100 and 120 on the y axis.
 #
 # Only modify the code between the "LADIES AND GENTLEMEN, START YOUR ENGINES"
 # and the "FINISH" lines.
 
 # This is the current record. Can you match or even beat it?
-RECORD = 6.828
+RECORD = 11.291
 
 from common import *
 import math
@@ -27,9 +24,6 @@ import solver
 TIME_LIMIT = 20 # seconds.
 
 MAX_TRACTION = 10 # m/s^2.
-
-# We start at (0, 0) in the frame of referene stationary to the track.
-INITIAL_POSITION = [0, 0]
 
 # LADIES AND GENTLEMEN, START YOUR ENGINES
 #
@@ -40,11 +34,15 @@ INITIAL_POSITION = [0, 0]
 # This time it's probably too hard to make the solution generic enough, so I'm
 # not going to tempt you with brownie points.
 
-# The car starts at x=0, y=0 and has an initial velocity along the x axis.
+# The initial position along the x axis. Must be between 0 and 20.
+# Intentionally picking an unoptimal initial value so that you can play around
+# with the naive solution and quantify how much difference "using the whole
+# width of the track" makes.
+INITIAL_X = 10
+
+# The initial velocity along the y axis.
 # You can change the initial speed to your liking.
-# sqrt(20 * 10) is the max constant speed a car can drive around an arc with
-# a 20 meter radius with 10 m/s traction.
-INITIAL_SPEED = math.sqrt(20 * 10)
+INITIAL_SPEED = 40
 
 # my_driver_algorithm(x, y, vx, vy, t) defines how your driver will drive.
 #
@@ -67,20 +65,37 @@ INITIAL_SPEED = math.sqrt(20 * 10)
 #   Hint: you're free to program the driver based on (x,y) only, or t only, or
 #   any combination of inputs.
 def my_driver_algorithm(x, y, vx, vy, t):
-    # First, do a 90º arc with a 20 meter radius with the center at (0, 20).
-    # The small offsets are added to correct for rounding/integration errors
-    # (duh...). This shouldn't affect the total time much, and is not needed
-    # for the optimal solution.
-    if t < 0.5 * math.pi * 20 / INITIAL_SPEED:
-        return (0.5 * (0 - x) + 0.0001, 0.5 * (20 - y))
+    # The naive solution involves driving in a straight line, then taking a 90º
+    # arc at a constant speed, and then driving in a straight line towards the
+    # finish.
 
-    # Then, do an 180º arc with a 20 meter radius with the center at (40, 20).
-    # 0.01 is added here to correct for rounding/integration errors as well.
-    if t < 1.5 * math.pi * 20 / INITIAL_SPEED:
-        return (0.5 * (40 - x) - 0.003, 0.5 * (20 - y) + 0.0001)
+    # If we want to hit the apex and we start 10 meters away from the inside
+    # "wall" and we want to be 10 meters away from the inside wall after the
+    # corner, this is the radius of the arc we need to take:
+    R = 10 / (1 - math.sqrt(0.5))
+
+    # This is the max speed we can carry in the arc at that speed.
+    Vr = math.sqrt(MAX_TRACTION * R)
+
+    # Driving in a straight line down the first straight.
+    if x < 20 and y < 110 - R:
+        # Hint: you can optimize this by using the knowledge from the previous
+        # races.
+        if vy > Vr:
+            return 0, -10
+        else:
+            return 0, 0
+
+    # 90º arc with a 20 meter radius with the center at (0, 20).
+    if x < 10 + R:
+        ax, ay = 10 + R - x, 110 - R - y
+        norm = math.sqrt(math.pow(ax, 2) + math.pow(ay, 2))
+        ax = 10 * ax / norm
+        ay = 10 * ay / norm
+        return ax, ay
 
     # Straight line acceleration to the finish.
-    return 0, -10
+    return 10, 0
 
 # # # # # # # # # # # # # # # # # # # # #
  # # # # # # # # FINISH! # # # # # # # # #
@@ -117,27 +132,17 @@ data_log = [
    ([], "speed, m/s", "distance, m"),
    ([], "long G, m/s^2", "distance, m"),
    ([], "lat G, m/s^2", "distance, m"),
-   ([], "line curvature radius, 1000/m", "distance, m"),
+   ([], "line curvature, 1000/m", "distance, m"),
 ]
-prev_position = [0, 0]
+
+INITIAL_POSITION = [INITIAL_X, 0]
+prev_position = INITIAL_POSITION[:]
 distance = 0
-passed_apex = False
 
 def progress_listener_callback_p_v_t(positions, velocities, t):
     x, y = positions[0], positions[1]
-    if y > 20 and x < 20:
+    if x < 0 or y > 120 or y < 0 or (x > 20 and y < 100):
         raise Exception(f"Cut the course at (x={x:.3f}, y={y:.3f}), t={t:.3f}")
-    if y > 20 and x > 60:
-        raise Exception(f"Cut the course at (x={x:.3f}, y={y:.3f}), t={t:.3f}")
-    if y > 60:
-        raise Exception(f"Hit the wall at (x={x:.3f}, y={y:.3f}), t={t:.3f}")
-
-    global passed_apex
-    if x >= 40 and not passed_apex:
-        if y < 40:
-            raise Exception(f"Cut the course at (x={x:.3f}, y={y:.3f}), t={t:.3f}")
-        passed_apex = True
-        print(f"Passed the cone at (x={x:.3f}, y={y:.3f}), t={t:.3f}")
 
     global distance
     global prev_position
@@ -172,21 +177,21 @@ def progress_listener_callback_p_v_t(positions, velocities, t):
     data_log[5][0].append((lat_g, distance))
     data_log[6][0].append((line_curvature, distance))
 
-    if x >= 50 and x <= 70 and y < 0:
+    if x >= 420 and y >= 100 and y <= 120:
         return True  # Finished!
     return False
 
 def main():
     try:
         positions, velocities, time = solver.solveRK4(
-            INITIAL_POSITION, [INITIAL_SPEED, 0],
+            INITIAL_POSITION, [0, INITIAL_SPEED],
             calculate_accelerations_p_v_t,
             TIME_LIMIT, 0.0001,
             progress_listener_callback_p_v_t)
 
         if time < TIME_LIMIT:
             print(f"Finished in {time:.3f} seconds.")
-            compare_lap_time_with_record_and_reference(time, RECORD, 7.701)
+            compare_lap_time_with_record_and_reference(time, RECORD, 12.772)
             print(f"Distance traveled: {distance:.3f} meters.")
         else:
             print(f"DNF")
@@ -197,7 +202,7 @@ def main():
         if len(data_log[0][0]):
             try:
                 import data_log_plotter
-                graphs_filename = "race_03.png"
+                graphs_filename = "race_06.png"
                 data_log_plotter.plot_graphs(data_log, graphs_filename)
                 print(f"Graphs for the data log were rendered to '{graphs_filename}'.")
             except ModuleNotFoundError:
