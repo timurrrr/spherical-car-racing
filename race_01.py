@@ -5,11 +5,13 @@
 # 1) travel at least 1 mile (1609 meters) in total, and
 # 2) come to a stop.
 #
-# The current record is 31.896 seconds. Can you match or even beat it?
-#
 # Only modify the code between the "LADIES AND GENTLEMEN, START YOUR ENGINES" and the
 # "FINISH" lines.
 
+# This is the current record. Can you match or even beat it?
+RECORD = 31.896
+
+from common import *
 import math
 import solver
 
@@ -107,15 +109,8 @@ def main():
             progress_listener_callback_p_v_t)
 
         if time < TIME_LIMIT:
-            # Need to do two <= comparisons here as the underlying number has more
-            # .3 precision. It can be tricky to deal with rounding!
-            if time <= 31.8955:
-                print("NEW RECORD! Please reach out to timurrrr@ to certify.")
-            elif time <= 31.8961:
-                print("YOU WON! Congrats.")
-            else:
-                print("Good effort, but can you go quicker?")
             print(f"Finished in {time:.3f} seconds.")
+            compare_lap_time_with_record_and_reference(time, RECORD, 36.569)
             print(f"Distance traveled: {positions[0]:.1f} meters.")
         else:
             print(f"DNF")

@@ -10,11 +10,15 @@
 #     (40, 40), (80, 0), (120, 40), (160, 0), (200, 40)
 #   and finish by going through the gate between (210, 0) and (230, 0).
 #
-# The current record is 22.832 seconds. Can you match or even beat it?
-#
 # Only modify the code between the "LADIES AND GENTLEMEN, START YOUR ENGINES" and the
 # "FINISH" lines.
 
+# This is the current record. Can you match or even beat it?
+# TODO: the theoretical fastest time is a bit faster, but I was unable to achieve it yet due to
+#       rounding errors.
+RECORD = 22.832
+
+from common import *
 import math
 import solver
 
@@ -198,17 +202,8 @@ def main():
             progress_listener_callback_p_v_t)
 
         if time < TIME_LIMIT:
-            # Need to do <= comparisons here as the underlying number has more than
-            # .3 precision. It can be tricky to deal with rounding!
-            # TODO: well actually the theoretical fastest time is a bit faster,
-            #   but I was unable to achieve it yet due to rounding errors.
-            if time <= 22.8315:
-                print("NEW RECORD! Please reach out to timurrrr@ to certify.")
-            elif time <= 22.8325:
-                print("YOU WON! Congrats.")
-            else:
-                print("Good effort, but can you go quicker?")
             print(f"Finished in {time:.3f} seconds.")
+            compare_lap_time_with_record_and_reference(time, RECORD, 25.490)
             print(f"Distance traveled: {distance:.3f} meters.")
         else:
             print(f"DNF")

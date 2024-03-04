@@ -5,14 +5,16 @@
 # You can enter the section at any speed, but your speed at the end of the
 # section should be 30 m/s or lower.
 #
-# The current record is 2.386 seconds. Can you match or even beat it?
-#
 # Note that due to rounding errors you might not be able to have the exit speed
 # precisely match 30 m/s.
 #
 # Only modify the code between the "LADIES AND GENTLEMEN, START YOUR ENGINES" and the
 # "FINISH" lines.
 
+# This is the current record. Can you match or even beat it?
+RECORD = 2.386
+
+from common import *
 import math
 import solver
 
@@ -114,15 +116,8 @@ def main():
 
         if time < TIME_LIMIT:
             if velocities[0] <= MAX_SPEED_AT_FINISH:
-                # Need to do <= comparisons here as the underlying number has more than
-                # .3 precision. It can be tricky to deal with rounding!
-                if time <= 2.3855:
-                    print("NEW RECORD! Please reach out to timurrrr@ to certify.")
-                elif time <= 2.386:
-                    print("YOU WON! Congrats.")
-                else:
-                    print("Good effort, but can you go quicker?")
                 print(f"Finished in {time:.3f} seconds.")
+                compare_lap_time_with_record_and_reference(time, RECORD, 2.905)
                 print(f"Distance traveled: {positions[0]:.1f} meters.")
                 print(f"Speed at the finish: {velocities[0]:.2f} m/s.")
             else:

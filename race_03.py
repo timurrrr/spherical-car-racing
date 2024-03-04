@@ -14,11 +14,13 @@
 #   goes from (60, 60) to (60, 20).
 #   The finish line is then ahead of you, going from (50, 0) to (70, 0).
 #
-# The current record is 6.828 seconds. Can you match or even beat it?
-#
 # Only modify the code between the "LADIES AND GENTLEMEN, START YOUR ENGINES" and the
 # "FINISH" lines.
 
+# This is the current record. Can you match or even beat it?
+RECORD = 6.828
+
+from common import *
 import math
 import solver
 
@@ -183,15 +185,8 @@ def main():
             progress_listener_callback_p_v_t)
 
         if time < TIME_LIMIT:
-            # Need to do <= comparisons here as the underlying number has more than
-            # .3 precision. It can be tricky to deal with rounding!
-            if time <= 6.8275:
-                print("NEW RECORD! Please reach out to timurrrr@ to certify.")
-            elif time <= 6.8285:
-                print("YOU WON! Congrats.")
-            else:
-                print("Good effort, but can you go quicker?")
             print(f"Finished in {time:.3f} seconds.")
+            compare_lap_time_with_record_and_reference(time, RECORD, 7.701)
             print(f"Distance traveled: {distance:.3f} meters.")
         else:
             print(f"DNF")
