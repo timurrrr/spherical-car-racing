@@ -3,7 +3,7 @@
 You might have heard the terms
 "[spherical cow](https://en.wikipedia.org/wiki/Spherical_cow)"
 or "spherical horse" as a way to simplify a complex concept to illustrate some
-point without unnecessary details.
+physical phenomena without unnecessary details.
 
 As car racing is one of my passions, I figured why don't we try racing spherical
 cars, and learn something along the way?
