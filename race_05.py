@@ -15,7 +15,7 @@
 # and the "FINISH" lines.
 
 # This is the current record. Can you match or even beat it?
-RECORD = 6.814
+RECORD = 6.811
 
 from common import *
 import math
