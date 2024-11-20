@@ -16,7 +16,7 @@
 # This is the current record. Can you match or even beat it?
 # TODO: the theoretical fastest time is a bit faster, but I was unable to
 #       achieve it yet due to rounding errors.
-RECORD = 22.830
+RECORD = 22.829
 
 from common import *
 import math
